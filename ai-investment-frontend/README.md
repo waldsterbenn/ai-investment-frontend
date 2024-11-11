@@ -11,8 +11,11 @@ These are the building blocks used to realize the project:
 # Yarn packages for Vue
 Packages are coded functionality, somebody made, that solves a common problem or implements a desired functionality. Basically you don't have to reinvent how to do something that has already been solved in a good way.
 1. Pinia is used for state management in the app. [Pinia](https://pinia.vuejs.org/)
-1. Vue routing is used to manage how the app directs to subpages in the site.
+1. Vue routing is used to manage how the app directs to subpages in the site. [Vue Router](https://router.vuejs.org/)
 1. Prettier is used to help format and clean src code.
+
+# More vue info and community packages
+https://github.com/vuejs/awesome-vue?tab=readme-ov-file
 
 # Basic info and howto
 
