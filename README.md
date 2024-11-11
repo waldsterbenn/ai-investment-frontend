@@ -21,7 +21,7 @@ I don't think you need to run the init command, described on the yarnpkg website
 Install **"Vue - Official"** VSCode extention.
 From the Extentions menu (`Ctrl+Shift+X`)
 
-This this (i think) integrates VSCode with vue app running in browser for seamless debugging.
+This this (i think) integrates VSCode with vue app running in browser for seamless debugging. But also enable VSCode to handle Vue + Typecript.
 
 ## Check out the Vue docs
 
