@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+// Note on routing: Importing a view statically will load it immedeatly. Using the component: syntax will allow lazy loading.
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

@@ -1605,7 +1605,7 @@ __metadata:
     oxlint: "npm:^0.11.0"
     pinia: "npm:^2.2.6"
     prettier: "npm:^3.3.3"
-    typescript: "npm:~5.6.3"
+    typescript: "npm:^5.6.3"
     vite: "npm:^5.4.10"
     vite-plugin-vue-devtools: "npm:^7.5.4"
     vitest: "npm:^2.1.4"
@@ -4359,7 +4359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~5.6.3":
+"typescript@npm:^5.6.3":
   version: 5.6.3
   resolution: "typescript@npm:5.6.3"
   bin:
@@ -4369,7 +4369,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A~5.6.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.6.3#optional!builtin<compat/typescript>":
   version: 5.6.3
   resolution: "typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"
   bin:
