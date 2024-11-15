@@ -29,6 +29,14 @@ https://vuejs.org/guide/quick-start.html
 
 # Start webapp first time
 
+## Node
+
+We use modern Node env.
+Use the init_node.ps1 scripts.
+This is required every time the system has been restarted.
+
+## Vue
+
 This repo is already configured with a Vue.js app, so you should be able to just run vue app on localhost:
 
 ```
@@ -48,3 +56,8 @@ Just run `yarn dev` to start the webapp.
 Run any of the other _"scripts"_ defined in: ai-investment-frontend\package.json
 
 For example: `yarn lint`, to run the linter and check source files for errors and syntax problems.
+
+# A note on python
+
+To use the system Python 3 must be installed along with anaconda3.
+Python scripts will be run in conda environments to allow them to use required libraries.

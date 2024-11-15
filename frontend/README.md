@@ -1,20 +1,25 @@
 # ai-investment-frontend
 
 # About
+
 This is an app that act as frontend for another system that come up with insights into investment in specific stocks.
 These are the building blocks used to realize the project:
+
 1. Vue.js is a single page application framework where you code your website, as you would an app for windows or mobile. Vue helps with state management, routing and componentisation of code, to help organize how functionality is implemented. Essentially instead of making the website with HTML, you code it with Typescript (or Javascript). Although you also use a HTML like templating to describe the visual representation of the site. Similar concept as Angular or React, the website content adapt dynamically to changes in the underlying datamodel, so you don't have to manage updating data, rerendering and so on. [Vue](https://vuejs.org/)
 1. Vite heps hosting, compiling and serving the app. It's a quick, modern and easy to use alternative to webpack. [Vite](https://vite.dev/)
 1. Node.js is used as backend for the vue app, and the lib also provides vue with functionality. [Node](https://nodejs.org/en)
 1. Yarn is a package manager that makes life easier. You also spin up local dev server, build for prod or run test using Yarn. [Yarn](https://yarnpkg.com/)
 
 # Yarn packages for Vue
+
 Packages are coded functionality, somebody made, that solves a common problem or implements a desired functionality. Basically you don't have to reinvent how to do something that has already been solved in a good way.
+
 1. Pinia is used for state management in the app. [Pinia](https://pinia.vuejs.org/)
 1. Vue routing is used to manage how the app directs to subpages in the site. [Vue Router](https://router.vuejs.org/)
 1. Prettier is used to help format and clean src code.
 
 # More vue info and community packages
+
 https://github.com/vuejs/awesome-vue?tab=readme-ov-file
 
 # Basic info and howto
@@ -34,12 +39,14 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 ## Project Setup
 
 ```sh
+./init_node.ps1
 yarn
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
+./init_node.ps1
 yarn dev
 ```
 

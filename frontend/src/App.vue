@@ -1,19 +1,35 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { useSelectedStockStore } from './stores/selectedstock'
+import { ref } from 'vue';
+const selectedItem = useSelectedStockStore()
+
+const links = ref([
+  { to: '/', text: 'Home' },
+  { to: '/selectstock', text: 'Select Stock' },
+  { to: '/technicalanalysis', text: 'Technical Analysis' },
+  { to: '/about', text: 'About' }
+]);
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <div v-for="(link, index) in links" :key="index">
+          <RouterLink :to="link.to">{{ link.text }}</RouterLink>
+        </div>
       </nav>
+
+      <div v-if="selectedItem.stock">
+
+        <h2>{{ selectedItem.stock.name }} ({{ selectedItem.stock.ticker_symbol }})</h2>
+
+        <p>Buy Price: {{ selectedItem.stock.buy_price }} {{ selectedItem.stock.currency }}</p>
+        <p>Buy Date: {{ selectedItem.stock.buy_date }}</p>
+      </div>
+
     </div>
   </header>
 
@@ -23,7 +39,7 @@ import HelloWorld from './components/HelloWorld.vue'
 <style scoped>
 header {
   line-height: 1.5;
-  max-height: 100vh;
+  max-width: 100vh;
 }
 
 .logo {
@@ -32,10 +48,9 @@ header {
 }
 
 nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  flex-direction: column;
+  align-self: baseline;
+  margin-bottom: 0.5rem;
 }
 
 nav a.router-link-exact-active {
