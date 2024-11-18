@@ -5,12 +5,7 @@ import { useSelectedStockStore } from '../stores/selectedstock'
 
 const selectedItem = useSelectedStockStore()
 
-//const selectedItem = ref();
 const items = ref([]);
-
-// async function runTechicalAnalysis(event) {
-//   selectedStock.update(selectedItem.value)
-// }
 
 watchEffect(async () => {
   try {
@@ -23,59 +18,43 @@ watchEffect(async () => {
   }
 });
 
-defineProps<{
-  msg: string
-}>()
+// defineProps<{
+//   msg: string
+// }>()
 </script>
 
 <template>
-  <div>
-    <h1>Portfolio</h1>
-    <h3>Available companies</h3>
-    <ul>
-      <li v-for="item in items" :key="item.name">
-        <input type="radio" :id="item.id" :value="item" v-model="selectedItem.stock" />
-        <label :for="item.id">
-          {{ item.name }} ({{ item.ticker_symbol }})
-        </label>
-      </li>
-    </ul>
-    <!-- <div v-if="selectedItem.stock">
-      <h2>Selected:</h2>
-      <p>Name: {{ selectedItem.stock.name }}</p>
-      <p>Ticker Symbol: {{ selectedItem.stock.ticker_symbol }}</p>
-      <p>Buy Price: {{ selectedItem.stock.buy_price }} {{ selectedItem.stock.currency }}</p>
-      <p>Buy Date: {{ selectedItem.stock.buy_date }}</p>
-    </div> -->
-
-    <RouterLink to="/">
-      <button>Ok</button>
-    </RouterLink>
+  <div class="container text-start">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-2">
+      </div>
+      <div class="col col-md-auto">
+        <div class="card">
+          <header class="card-header">
+            <h3 class="card-title">Portfolio with available companies</h3>
+            <span class="card-text">Select a company to continue with the investigation.</span>
+          </header>
+          <div class="card-body">
+            <div v-for="item in items" :key="item.name" class="form-check">
+              <input type="radio" class="form-check-input" :id="item.id" :value="item" v-model="selectedItem.stock" />
+              <label :for="item.id" class="form-check-label">
+                {{ item.name }} ({{ item.ticker_symbol }})
+              </label>
+            </div>
+          </div>
+          <footer class="card-footer text-end">
+            <RouterLink to="/">
+              <button class="btn btn-primary" type="button">Ok</button>
+            </RouterLink>
+          </footer>
+        </div>
+      </div>
+      <div class="col col-lg-2">
+      </div>
+    </div>
   </div>
+
+
 </template>
 
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-</style>
+<style scoped></style>

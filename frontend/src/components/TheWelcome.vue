@@ -12,30 +12,45 @@ import { useSelectedStockStore } from '../stores/selectedstock'
 const selectedItem = useSelectedStockStore()
 const report = useReportStore()
 
-const selectedStockCheckbox = computed(() => Boolean(selectedItem.stock !== null && selectedItem.stock !== undefined))
-const taCheckbox = computed(() => Boolean(report.report.length > 0))
+const isStockSlected = computed(() => Boolean(selectedItem.stock !== null && selectedItem.stock !== undefined))
+const isTaComplete = computed(() => Boolean(report.report.length > 0))
 </script>
 
 <template>
-  <WelcomeItem class="{{  }}">
-    <template #icon>
-      <RouterLink to="/selectstock">
-        <DocumentationIcon />
-      </RouterLink>
-    </template>
-    <template #heading>
-      <RouterLink to="/selectstock">
-        Select company
-        <!-- <input type="checkbox" value="stock" v-model="selectedItem.stock" /> -->
-        <input type="checkbox" v-model="selectedStockCheckbox" />
-      </RouterLink>
-    </template>
+  <div class="container text-start">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-2">
+      </div>
+      <div class="col col-md-auto">
+        <div class="card">
+          <header class="card-header">
+            <h3 class="card-title">Progress</h3>
+            <span class="card-text">Run through the steps you desire to get a comprehensive analysis of a stock</span>
+          </header>
+          <div class="card-body">
+            <WelcomeItem :class="{ 'text-bg-success': isStockSlected }">
+              <template #icon>
+                <DocumentationIcon />
+              </template>
+              <template #heading>
+                Select Company
+              </template>
+              <template #actionbutton>
+                <RouterLink to="/selectstock">
+                  <button class="btn btn-primary" type="button">
+                    Select company
+                  </button>
+                </RouterLink>
+              </template>
+              <template #content>
+                Select the stock you want to analyse.
 
-    Select the stock you want to analyse.
+              </template>
 
-  </WelcomeItem>
 
-  <!-- <WelcomeItem>
+            </WelcomeItem>
+          </div>
+          <!-- <WelcomeItem>
     <template #icon>
       <CommunityIcon />
     </template>
@@ -48,31 +63,37 @@ const taCheckbox = computed(() => Boolean(report.report.length > 0))
 
   </WelcomeItem> -->
 
-  <!-- <WelcomeItem>
+          <!-- <WelcomeItem>
     <template #icon>
       <ToolingIcon />
     </template>
     <template #heading>Fundamental analysis</template>
     The system will analyse key figures in the company's financial reporting.
   </WelcomeItem> -->
+          <div class="card-body">
 
-  <WelcomeItem>
-    <template #icon>
-      <RouterLink to="/technicalanalysis">
-        <EcosystemIcon />
-      </RouterLink>
-    </template>
-    <template #heading>
-      <RouterLink to="/technicalanalysis">
-        Technical analysis
-        <input type="checkbox" v-model="taCheckbox" />
-      </RouterLink>
 
-    </template>
-    Let the system analyse if the timing is right to buy or sell.
-  </WelcomeItem>
+            <WelcomeItem :class="{ 'text-bg-success': isTaComplete }">
+              <template #icon>
+                <EcosystemIcon />
+              </template>
+              <template #heading>
+                Technical analysis
+              </template>
+              <template #actionbutton>
+                <RouterLink to="/technicalanalysis">
+                  <button class="btn btn-primary" type="button">
+                    Technical analysis
+                  </button>
+                </RouterLink>
+              </template>
+              <template #content>
+                Let the system analyse if the timing is right to buy or sell.
+              </template>
 
-  <!-- <WelcomeItem>
+
+            </WelcomeItem>
+            <!-- <WelcomeItem>
     <template #icon>
       <SupportIcon />
     </template>
@@ -80,4 +101,14 @@ const taCheckbox = computed(() => Boolean(report.report.length > 0))
     Review your personal assesment.
 
   </WelcomeItem> -->
+          </div>
+          <!-- <footer class="card-footer text-end">
+
+          </footer> -->
+        </div>
+      </div>
+      <div class="col col-lg-2">
+      </div>
+    </div>
+  </div>
 </template>

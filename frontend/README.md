@@ -39,15 +39,24 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 ## Project Setup
 
 ```sh
-./init_node.ps1
+# see https://nodejs.org/en/download/package-manager
+
+# installs fnm (Fast Node Manager)
+winget install Schniz.fnm
+# configure fnm environment
+fnm env --use-on-cd | Out-String | Invoke-Expression
+# download and install Node.js
+fnm use --install-if-missing 23
+
 yarn
 ```
 
 ### Compile and Hot-Reload for Development
 
+On every cold start node must be installed via fnm. Run the start script.
+
 ```sh
-./init_node.ps1
-yarn dev
+./start_node.ps1
 ```
 
 ### Type-Check, Compile and Minify for Production

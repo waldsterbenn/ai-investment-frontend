@@ -1,4 +1,16 @@
 # server
 
-1. run init_node.ps1
-1. yarn node ./server.js
+On every cold start node must be installed via fnm. Run the start script or this.
+
+```sh
+# see https://nodejs.org/en/download/package-manager
+
+# installs fnm (Fast Node Manager)
+winget install Schniz.fnm
+# configure fnm environment
+fnm env --use-on-cd | Out-String | Invoke-Expression
+# download and install Node.js
+fnm use --install-if-missing 23
+
+yarn node ./server.js
+```

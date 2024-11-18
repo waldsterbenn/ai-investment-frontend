@@ -5,7 +5,6 @@ import { ref } from 'vue';
 const selectedItem = useSelectedStockStore()
 
 const links = ref([
-  { to: '/', text: 'Home' },
   { to: '/selectstock', text: 'Select Stock' },
   { to: '/technicalanalysis', text: 'Technical Analysis' },
   { to: '/about', text: 'About' }
@@ -13,36 +12,56 @@ const links = ref([
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
+  <div class="container py-4 px-3 mx-auto">
+    <header>
 
-      <nav>
-        <div v-for="(link, index) in links" :key="index">
-          <RouterLink :to="link.to">{{ link.text }}</RouterLink>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Advisor</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item" v-for="(link, index) in links" :key="index">
+
+                <RouterLink :to="link.to" class="m-2 nav-link">
+                  <button class="btn btn-primary" type="button">
+                    {{ link.text }}
+                  </button>
+                </RouterLink>
+              </li>
+            </ul>
+
+            <span class="nav-text" v-if="selectedItem.stock">
+              {{ selectedItem.stock.name }} ({{ selectedItem.stock.ticker_symbol }})
+              <!-- <p>Buy Price: {{ selectedItem.stock.buy_price }} {{ selectedItem.stock.currency }}</p>
+                  <p>Buy Date: {{ selectedItem.stock.buy_date }}</p> -->
+            </span>
+            <span class="nav-text" v-else>
+              No company selected
+            </span>
+
+          </div>
         </div>
       </nav>
 
-      <div v-if="selectedItem.stock">
-
-        <h2>{{ selectedItem.stock.name }} ({{ selectedItem.stock.ticker_symbol }})</h2>
-
-        <p>Buy Price: {{ selectedItem.stock.buy_price }} {{ selectedItem.stock.currency }}</p>
-        <p>Buy Date: {{ selectedItem.stock.buy_date }}</p>
-      </div>
-
+    </header>
+    <div class="wrapper">
+      <RouterView />
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
 <style scoped>
-header {
+/* header {
   line-height: 1.5;
   max-width: 100vh;
-}
+} */
 
-.logo {
+/* .logo {
   display: block;
   margin: 0 auto 2rem;
 }
@@ -96,5 +115,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>

@@ -4,6 +4,7 @@ import { marked } from 'marked'
 import { useReportStore } from '../stores/tareport'
 import { useSelectedStockStore } from '../stores/selectedstock'
 import { computed, ref } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 
 const report = useReportStore()
@@ -32,19 +33,35 @@ async function runTechicalAnalysis(_event: unknown) {
   }
 }
 
-
 </script>
 
 <template>
   <div>
-    <button @click="runTechicalAnalysis" v-bind:disabled="isRunningAnalysis">Run Analysis
-      <EcosystemIcon />
-    </button>
-
     <div class="pre-container">
-      <span v-if="selectedItem.stock == null" class="error-message">You must select a stock before we know what to
-        analyse</span>
-      <div v-else class="markdown" v-html="output"></div>
+      <div class="card">
+        <div class="card-body">
+          <span v-if="selectedItem.stock == null" class="card-text">You must
+            <RouterLink class="card-link" to="selectstock">{{ "select a stock" }}</RouterLink>
+            before
+            we
+            know what to
+            analyse
+          </span>
+          <span v-else-if="selectedItem.stock != null">You can run an analysis on {{ selectedItem.stock.name }},
+            it may take a while.</span>
+          <div v-else class="markdown" v-html="output"></div>
+        </div>
+        <footer class="card-footer text-end">
+          <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Analysing...
+          </button>
+          <button @click="runTechicalAnalysis" v-bind:hidden="isRunningAnalysis"
+            v-bind:disabled="selectedItem.stock == null" class="btn btn-primary" type="button"
+            v-if="!isRunningAnalysis">Run Analysis
+          </button>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
@@ -60,9 +77,9 @@ async function runTechicalAnalysis(_event: unknown) {
 }
 
 .pre-container {
-  border-color: var(--color-border);
+  /* border-color: var(--color-border);
   border-width: 1px;
-  border-style: solid;
+  border-style: solid; */
 
   white-space: pre-wrap;
   /* Keeps line breaks */

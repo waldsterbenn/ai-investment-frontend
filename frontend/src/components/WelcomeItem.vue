@@ -1,19 +1,21 @@
 <template>
-  <div class="item">
-    <i>
+  <div class="card">
+    <header class="card-header">
       <slot name="icon"></slot>
-    </i>
-    <div class="details">
-      <h3>
-        <slot name="heading"></slot>
-      </h3>
-      <slot></slot>
+      <span> </span>
+      <slot name="heading"></slot>
+    </header>
+    <div class="card-body">
+      <slot name="content" class="card-text"></slot>
+    </div>
+    <div class="card-footer text-end">
+      <slot name="actionbutton"></slot>
     </div>
   </div>
 </template>
 
 <style scoped>
-.item {
+/* .item {
   margin-top: 2rem;
   display: flex;
   position: relative;
@@ -83,5 +85,5 @@ h3 {
   .item:last-of-type:after {
     display: none;
   }
-}
+} */
 </style>
