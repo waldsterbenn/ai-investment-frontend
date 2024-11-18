@@ -30,6 +30,25 @@ function readData() {
   return JSON.parse(rawData);
 }
 
+app.post("/api/save-report", async (req, res) => {
+  console.debug("/api/save-report");
+  const jsn = JSON.parse(req.body);
+  const outputFilePath = path.join(
+    __dirname,
+    `../../ai-investment-manager/data/${jsn.filename}`
+  );
+  fs.writeFileSync(outputFilePath, jsn.reportData, "utf-8");
+});
+
+function loadFauxReport() {
+  const filePath = path.join(__dirname, "data/test.md");
+  const report = fs.readFileSync(filePath, "utf-8");
+  return report;
+  // console.warn(report);
+  // res.json({ success: true, report });
+  // return;
+}
+
 app.post("/api/run-technical-analysis", async (req, res) => {
   console.debug("/api/run-technical-analysis > script caller triggered");
   // Path to your Python script

@@ -10,7 +10,7 @@ import EcosystemIcon from './icons/IconEcosystem.vue'
 const report = useReportStore()
 const selectedItem = useSelectedStockStore()
 
-const output = computed(() => marked(report.report))
+const output = computed(() => marked(report.report));
 
 
 const isRunningAnalysis = ref(false);
@@ -20,10 +20,9 @@ async function runTechicalAnalysis(_event: unknown) {
     isRunningAnalysis.value = true;
     try {
       const response = await axios.post('http://localhost:3001/api/run-technical-analysis',
-        //{ stock: selectedItem.value },
         selectedItem.stock,
         { headers: { 'Content-Type': 'application/json' }, });
-      report.updateReport(response.data.report)
+      report.updateReport(response.data.report);
     } catch (error) {
       console.error(error);
       alert(error);
@@ -47,9 +46,12 @@ async function runTechicalAnalysis(_event: unknown) {
             know what to
             analyse
           </span>
-          <span v-else-if="selectedItem.stock != null">You can run an analysis on {{ selectedItem.stock.name }},
+          <span v-else-if="selectedItem.stock != null && report.report == null">You can run an analysis on {{
+            selectedItem.stock.name }},
             it may take a while.</span>
-          <div v-else class="markdown" v-html="output"></div>
+
+          <div v-if="report.report != null" class="markdown" v-html="marked(report.report)"></div>
+
         </div>
         <footer class="card-footer text-end">
           <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
