@@ -12,8 +12,8 @@ import { useSelectedStockStore } from '../stores/selectedstock'
 const selectedItem = useSelectedStockStore()
 const report = useReportStore()
 
-const isStockSlected = computed(() => Boolean(selectedItem.stock !== null && selectedItem.stock !== undefined))
-const isTaComplete = computed(() => Boolean(report.report.length > 0))
+const isStockSlected = computed(() => Boolean(selectedItem?.stock !== null && selectedItem.stock !== undefined))
+const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
 </script>
 
 <template>

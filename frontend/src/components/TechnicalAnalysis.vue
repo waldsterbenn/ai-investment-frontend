@@ -12,8 +12,12 @@ const selectedItem = useSelectedStockStore()
 
 const output = computed(() => marked(report.report));
 
-
 const isRunningAnalysis = ref(false);
+
+async function copyToClipboard(_event: unknown) {
+  await navigator.clipboard.writeText(report.report);
+  alert("Copied");
+}
 
 async function runTechicalAnalysis(_event: unknown) {
   if (!isRunningAnalysis.value) {
@@ -50,10 +54,14 @@ async function runTechicalAnalysis(_event: unknown) {
             selectedItem.stock.name }},
             it may take a while.</span>
 
-          <div v-if="report.report != null" class="markdown" v-html="marked(report.report)"></div>
+          <div v-if="report.report != null" class="markdown" v-html="output"></div>
 
         </div>
         <footer class="card-footer text-end">
+          <button @click="copyToClipboard" v-bind:disabled="report.report == null" class="btn me-2" type="button">Copy
+            to clipboard
+          </button>
+
           <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Analysing...

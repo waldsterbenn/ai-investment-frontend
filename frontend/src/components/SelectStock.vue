@@ -44,7 +44,7 @@ watchEffect(async () => {
           </div>
           <footer class="card-footer text-end">
             <RouterLink to="/">
-              <button class="btn btn-primary" type="button">Ok</button>
+              <button class="btn btn-primary" type="button">Back</button>
             </RouterLink>
           </footer>
         </div>

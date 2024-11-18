@@ -11,14 +11,14 @@
           <div class="card-body">
             <blockquote class="blockquote">
               <span class="card-text">
-                You can analyse the companies stocks and use the reports as you see fit.
+                You can analyse company stocks and use the reports as you see fit.
               </span>
             </blockquote>
             <h4>Features:</h4>
             <ol>
               <li>Techical Analysis: LLM will analyse a stock's performance and evaluate it's near-term price direction,
                 based on technical indicators.</li>
-              <li>You can save an analysis report as a Markdown file (.md)</li>
+              <li>You can copy an analysis report and save the Markdown text for later.</li>
             </ol>
           </div>
           <footer class="card-footer text-end">
