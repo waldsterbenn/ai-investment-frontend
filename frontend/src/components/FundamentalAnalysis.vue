@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { marked } from 'marked'
-import { useReportStore } from '../stores/tareport'
-import { useSelectedStockStore } from '../stores/selectedstock'
+import { useSelectedStockStore } from '@/stores/selectedstock'
 import { computed, ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
-import EcosystemIcon from './icons/IconEcosystem.vue'
+import { RouterLink } from 'vue-router'
+import { useFundamentalReportStore } from '@/stores/fundamental_report';
 
-const report = useReportStore()
+const report = useFundamentalReportStore()
 const selectedItem = useSelectedStockStore()
 
 const output = computed(() => marked(report.report));
@@ -19,12 +18,12 @@ async function copyToClipboard(_event: unknown) {
   alert("Copied");
 }
 
-async function runTechicalAnalysis(_event: unknown) {
+async function runAnalysis(_event: unknown) {
   if (!isRunningAnalysis.value) {
     isRunningAnalysis.value = true;
-    report.updateReport("");
     try {
-      const response = await axios.post('http://localhost:3001/api/run-technical-analysis',
+      report.updateReport("");
+      const response = await axios.post('http://localhost:3001/api/run-financial-analysis',
         selectedItem.stock,
         { headers: { 'Content-Type': 'application/json' }, });
       report.updateReport(response.data.report);
@@ -68,9 +67,8 @@ async function runTechicalAnalysis(_event: unknown) {
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Analysing...
           </button>
-          <button @click="runTechicalAnalysis" v-bind:hidden="isRunningAnalysis"
-            v-bind:disabled="selectedItem.stock == null" class="btn btn-primary" type="button"
-            v-if="!isRunningAnalysis">Run Analysis
+          <button @click="runAnalysis" v-bind:hidden="isRunningAnalysis" v-bind:disabled="selectedItem.stock == null"
+            class="btn btn-primary" type="button" v-if="!isRunningAnalysis">Run Analysis
           </button>
         </footer>
       </div>

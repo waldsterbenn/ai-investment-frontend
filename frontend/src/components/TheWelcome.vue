@@ -30,7 +30,7 @@ const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
           <div class="card-body">
             <WelcomeItem :class="{ 'text-bg-success': isStockSlected }">
               <template #icon>
-                <DocumentationIcon />
+                <ToolingIcon />
               </template>
               <template #heading>
                 Select Company
@@ -71,8 +71,27 @@ const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
     The system will analyse key figures in the company's financial reporting.
   </WelcomeItem> -->
           <div class="card-body">
+            <WelcomeItem :class="{ 'text-bg-success': isTaComplete }">
+              <template #icon>
+                <DocumentationIcon />
+              </template>
+              <template #heading>
+                Fundamental analysis
+              </template>
+              <template #actionbutton>
+                <RouterLink to="/fundamentalanlysis">
+                  <button class="btn btn-primary" type="button">
+                    Fundamental analysis
+                  </button>
+                </RouterLink>
+              </template>
+              <template #content>
+                The system will analyse key figures in the company's financial reporting.
+              </template>
+            </WelcomeItem>
+          </div>
 
-
+          <div class="card-body">
             <WelcomeItem :class="{ 'text-bg-success': isTaComplete }">
               <template #icon>
                 <EcosystemIcon />
@@ -90,10 +109,9 @@ const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
               <template #content>
                 Let the system analyse if the timing is right to buy or sell.
               </template>
-
-
             </WelcomeItem>
-            <!-- <WelcomeItem>
+          </div>
+          <!-- <WelcomeItem>
     <template #icon>
       <SupportIcon />
     </template>
@@ -101,7 +119,6 @@ const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
     Review your personal assesment.
 
   </WelcomeItem> -->
-          </div>
           <!-- <footer class="card-footer text-end">
 
           </footer> -->

@@ -1,4 +1,4 @@
-class ServerConfig {
+export class ServerConfig {
   constructor() {}
 
   static conda_exe_path = "C:/Users/ls/anaconda3/Scripts/conda.exe";

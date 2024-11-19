@@ -2,10 +2,14 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useSelectedStockStore } from './stores/selectedstock'
 import { ref } from 'vue';
+import ToolingIcon from './components/icons/IconTooling.vue'
+
 const selectedItem = useSelectedStockStore()
 
 const links = ref([
+  { to: '/', text: 'Overview' },
   { to: '/selectstock', text: 'Select Stock' },
+  { to: '/fundamentalanlysis', text: 'Fundamental Analysis' },
   { to: '/technicalanalysis', text: 'Technical Analysis' },
   { to: '/about', text: 'About' }
 ]);
@@ -15,9 +19,11 @@ const links = ref([
   <div class="container py-4 px-3 mx-auto">
     <header>
 
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar navbar-expand-lg bg-primary-subtle border border-primary rounded mb-2">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/">Advisor</a>
+          <a class="navbar-brand" href="/"><button class="btn btn-secondary" type="button">
+              Reset
+            </button></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -36,7 +42,7 @@ const links = ref([
             </ul>
 
             <span class="nav-text" v-if="selectedItem.stock">
-              {{ selectedItem.stock.name }} ({{ selectedItem.stock.ticker_symbol }})
+              <ToolingIcon /> {{ selectedItem.stock.name }} ({{ selectedItem.stock.ticker_symbol }})
               <!-- <p>Buy Price: {{ selectedItem.stock.buy_price }} {{ selectedItem.stock.currency }}</p>
                   <p>Buy Date: {{ selectedItem.stock.buy_date }}</p> -->
             </span>
