@@ -53,7 +53,7 @@ yarn
 
 ### Compile and Hot-Reload for Development
 
-On every cold start node must be installed via fnm. Run the start script.
+On every cold start node must be installed via fnm. Run the start script for easy use.
 
 ```sh
 ./start_node.ps1
