@@ -21,7 +21,7 @@ yarn node ./server.js
 
 Anaconda3 must be installed. https://www.anaconda.com/
 
-Note that the server/config/server_config.js` must be configured to contain the paths of your local conda env.
+Note that the `server/config/server_config.js` must be configured to contain the paths of your local conda env.
 
 ```js
 conda_exe_path = "C:/Users/<windows_user>/anaconda3/Scripts/conda.exe";
