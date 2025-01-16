@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { marked } from 'marked'
-import { useReportStore } from '../stores/tareport'
-import { useSelectedStockStore } from '../stores/selectedstock'
+import { marked } from 'marked';
 import { computed, ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router'
-import EcosystemIcon from './icons/IconEcosystem.vue'
+import { RouterLink } from 'vue-router';
+import { useSelectedStockStore } from '../stores/selectedstock';
+import { useReportStore } from '../stores/tareport';
 
 const report = useReportStore()
 const selectedItem = useSelectedStockStore()
@@ -43,21 +42,6 @@ async function runTechicalAnalysis(_event: unknown) {
   <div>
     <div class="pre-container">
       <div class="card">
-        <div class="card-body">
-          <span v-if="selectedItem.stock == null" class="card-text">You must
-            <RouterLink class="card-link" to="selectstock">{{ "select a stock" }}</RouterLink>
-            before
-            we
-            know what to
-            analyse
-          </span>
-          <span v-else-if="selectedItem.stock != null && report.report == null">You can run an analysis on {{
-            selectedItem.stock.name }},
-            it may take a while.</span>
-
-          <div v-if="report.report != null" class="markdown" v-html="output"></div>
-
-        </div>
         <footer class="card-footer text-end">
           <button @click="copyToClipboard" v-bind:disabled="report.report == null" class="btn btn-secondary me-2"
             type="button">Copy
@@ -73,6 +57,22 @@ async function runTechicalAnalysis(_event: unknown) {
             v-if="!isRunningAnalysis">Run Analysis
           </button>
         </footer>
+        <div class="card-body">
+          <span v-if="selectedItem.stock == null" class="card-text">You must
+            <RouterLink class="card-link" to="selectstock">{{ "select a stock" }}</RouterLink>
+            before
+            we
+            know what to
+            analyse
+          </span>
+          <span v-else-if="selectedItem.stock != null && report.report == null">You can run an analysis on {{
+            selectedItem.stock.name }},
+            it may take a while.</span>
+
+          <div v-if="report.report != null" class="markdown" v-html="output"></div>
+
+        </div>
+
       </div>
     </div>
   </div>

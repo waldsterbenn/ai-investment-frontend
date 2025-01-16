@@ -84,8 +84,8 @@ app.post("/api/run-technical-analysis", async (req, res) => {
 
   // Capture stderr data from the script
   childProcess.stderr.on("data", (err) => {
-    error += err.toString();
-    console.debug("script err: " + error);
+    error += err.toString() + "(Make sure OLLAMA is running)";
+    console.debug("Error: " + error);
   });
 
   // Handle when the script completes

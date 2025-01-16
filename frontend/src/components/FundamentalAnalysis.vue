@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import axios from 'axios';
-import { marked } from 'marked'
-import { useSelectedStockStore } from '@/stores/selectedstock'
-import { computed, ref } from 'vue';
-import { RouterLink } from 'vue-router'
 import { useFundamentalReportStore } from '@/stores/fundamental_report';
+import { useSelectedStockStore } from '@/stores/selectedstock';
+import axios from 'axios';
+import { marked } from 'marked';
+import { computed, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const report = useFundamentalReportStore()
 const selectedItem = useSelectedStockStore()
@@ -42,6 +42,20 @@ async function runAnalysis(_event: unknown) {
   <div>
     <div class="pre-container">
       <div class="card">
+        <footer class="card-footer text-end">
+          <button @click="copyToClipboard" v-bind:disabled="report.report == null" class="btn btn-secondary me-2"
+            type="button">Copy
+            to clipboard
+          </button>
+
+          <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Analysing...
+          </button>
+          <button @click="runAnalysis" v-bind:hidden="isRunningAnalysis" v-bind:disabled="selectedItem.stock == null"
+            class="btn btn-primary" type="button" v-if="!isRunningAnalysis">Run Analysis
+          </button>
+        </footer>
         <div class="card-body">
           <span v-if="selectedItem.stock == null" class="card-text">You must
             <RouterLink class="card-link" to="selectstock">{{ "select a stock" }}</RouterLink>
@@ -57,20 +71,7 @@ async function runAnalysis(_event: unknown) {
           <div v-if="report.report != null" class="markdown" v-html="output"></div>
 
         </div>
-        <footer class="card-footer text-end">
-          <button @click="copyToClipboard" v-bind:disabled="report.report == null" class="btn btn-secondary me-2"
-            type="button">Copy
-            to clipboard
-          </button>
 
-          <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Analysing...
-          </button>
-          <button @click="runAnalysis" v-bind:hidden="isRunningAnalysis" v-bind:disabled="selectedItem.stock == null"
-            class="btn btn-primary" type="button" v-if="!isRunningAnalysis">Run Analysis
-          </button>
-        </footer>
       </div>
     </div>
   </div>
