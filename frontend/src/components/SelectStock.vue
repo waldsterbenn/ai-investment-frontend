@@ -3,7 +3,7 @@ import axios from 'axios';
 import { computed, ref, watchEffect } from 'vue';
 import { useSelectedStockStore } from '../stores/selectedstock';
 
-const selectedItem = useSelectedStockStore()
+const selectedItem = useSelectedStockStore();
 
 class PortfolioItem {
   id: string;
@@ -43,6 +43,10 @@ async function addStock() {
     errorMessage.value = 'Please fill in both fields.';
     return;
   }
+  if (portfolio.value.findIndex(x => x.ticker_symbol === tickerCode.value) > 0) {
+    errorMessage.value = 'Stock with ticker already exists.';
+    return;
+  }
 
   const newStock = new PortfolioItem(nextId.value, stockName.value, tickerCode.value);
   portfolio.value.push(newStock);
@@ -56,12 +60,30 @@ async function addStock() {
     errorMessage.value = 'Error adding stock. Please try again.';
   }
 }
+
+async function deleteStock(ticker_symbol: string) {
+  const confirmation = window.confirm('Are you sure you want to delete this item?');
+
+  if (!confirmation) return;
+
+  try {
+    await axios.post('http://localhost:3001/api/portfolio-delete', { ticker_symbol },
+      { headers: { 'Content-Type': 'application/json' } });
+
+    const index = portfolio.value.findIndex(x => x.ticker_symbol === ticker_symbol)
+    if (index > -1) {
+      portfolio.value.splice(index, 1);
+    }
+  } catch (error) {
+    console.error('Error deleting stock:', error);
+    errorMessage.value = 'Error deleting stock. Please try again.';
+  }
+}
 </script>
 
 <template>
   <div class="container text-start">
     <div class="row justify-content-md-center">
-      <div class="col col-lg-2"></div>
       <div class="col col-md-auto">
         <div class="card">
           <header class="card-header">
@@ -70,24 +92,44 @@ async function addStock() {
           </header>
           <div class="card-body">
             <!-- Form for adding new stock -->
-            <div v-if="errorMessage" class="alert alert-danger mb-3">{{ errorMessage }}</div>
+            <form>
+              <div v-if="errorMessage" class="col alert alert-danger">{{ errorMessage }}</div>
 
-            <div class="mb-3">
-              <label for="stockName" class="form-label">Stock Name</label>
-              <input type="text" id="stockName" v-model="stockName" class="form-control" />
-            </div>
-            <div class="mb-3">
-              <label for="tickerCode" class="form-label">Ticker Code</label>
-              <input type="text" id="tickerCode" v-model="tickerCode" class="form-control" />
-            </div>
-            <button @click.prevent="addStock" class="btn btn-success">Add Stock</button>
+              <div class="row">
+                <div class="col-6">
+                  <label class="form-label">Stock Name</label>
+                </div>
+                <div class="col-4">
+                  <label class="form-label">Ticker Code</label>
+                </div>
+                <div class="col-2">
+                </div>
+              </div>
 
+              <div class="row">
+                <div class="col-6">
+                  <input type="text" v-model="stockName" class="form-control" />
+                </div>
+                <div class="col-4">
+                  <input type="text" v-model="tickerCode" class="form-control">
+                </div>
+                <div class="col-2">
+                  <button @click.prevent="addStock" type="submit" class="col btn btn-success">
+                    Add
+                  </button>
+                </div>
+              </div>
+            </form>
             <!-- List of portfolio items -->
             <div v-for="item in sortedPortfolio" :key="item.id" class="form-check mt-3">
               <input type="radio" class="form-check-input" :id="item.id" :value="item" v-model="selectedItem.stock" />
               <label :for="item.id" class="form-check-label">
                 {{ item.name }} ({{ item.ticker_symbol }})
               </label>
+              <!-- Remove Button -->
+              <button @click.prevent="deleteStock(item.ticker_symbol)" class="btn btn-danger btn-close ml-2">
+
+              </button>
             </div>
           </div>
           <footer class="card-footer text-end">
@@ -97,7 +139,7 @@ async function addStock() {
           </footer>
         </div>
       </div>
-      <div class="col col-lg-2"></div>
+
     </div>
   </div>
 </template>

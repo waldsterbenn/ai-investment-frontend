@@ -8,6 +8,7 @@ const { ServerConfig } = require("./config/server_config.js");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const portfolioJsonFilePath = path.join(__dirname, "data/portfolio.json");
 
 app.use(cors());
 app.use(express.json()); //Middleware to parse json
@@ -20,46 +21,72 @@ app.get("/api/ping", (req, res) => {
   res.json({ message: "Pong" });
 });
 
+function loadPortfolioData() {
+  try {
+    const rawData = fs.readFileSync(portfolioJsonFilePath);
+    return JSON.parse(rawData);
+  } catch (parseErr) {
+    console.error("Error parsing portfolio JSON:", parseErr);
+    res.status(500).json({ success: false, parseErr });
+  }
+}
+
 app.get("/api/portfolio", (req, res) => {
-  const jsonData = readData();
+  const jsonData = loadPortfolioData();
   res.json(jsonData);
   console.debug(`fetched ${jsonData.portfolio.length} items`);
 });
 
-const filePath = path.join(__dirname, "data/portfolio.json");
 app.post("/api/portfolio-add", async (req, res) => {
-  console.debug("/api/portfolio-add");
+  console.debug("/api/portfolio-add " + req.body.ticker_symbol);
 
-  // Read the existing data from portfolio.json
-  fs.readFile(filePath, (err, data) => {
-    if (err) res.status(500).json({ success: false, err });
+  const jsonObj = loadPortfolioData();
+  const newItem = {
+    name: req.body.name,
+    ticker_symbol: req.body.ticker_symbol,
+    buy_price: 0,
+    currency: "",
+    buy_date: "",
+  };
+  jsonObj.portfolio.push(newItem);
 
-    let jsonObj;
-
-    try {
-      // Parse the JSON data
-      jsonObj = JSON.parse(data);
-    } catch (parseErr) {
-      console.error("Error parsing JSON:", parseErr);
-      res.status(500).json({ success: false, parseErr });
-      return;
+  // Write the updated data back to portfolio.json
+  fs.writeFile(
+    portfolioJsonFilePath,
+    JSON.stringify(jsonObj, null, 2),
+    (err) => {
+      if (err) {
+        res.status(500).json({ success: false, err });
+      } else {
+        console.log("Portfolio item added successfully.");
+        res.json({ success: true });
+      }
     }
-
-    jsonObj.portfolio.push(req.body);
-
-    // Write the updated data back to portfolio.json
-    fs.writeFile(filePath, JSON.stringify(jsonObj, null, 2), (err) => {
-      if (err) res.status(500).json({ success: false, err });
-      console.log("Portfolio item added successfully.");
-    });
-  });
+  );
 });
 
-function readData() {
-  const filePath = path.join(__dirname, "data/portfolio.json");
-  const rawData = fs.readFileSync(filePath);
-  return JSON.parse(rawData);
-}
+app.post("/api/portfolio-delete", async (req, res) => {
+  console.debug("/api/portfolio-delete " + req.body.ticker_symbol);
+
+  const jsonObj = loadPortfolioData();
+  jsonObj.portfolio = jsonObj.portfolio.filter(
+    (x) => x.ticker_symbol !== req.body.ticker_symbol
+  );
+
+  // Write the updated data back to portfolio.json
+  fs.writeFile(
+    portfolioJsonFilePath,
+    JSON.stringify(jsonObj, null, 2),
+    (err) => {
+      if (err) {
+        res.status(500).json({ success: false, err });
+      } else {
+        console.log("Portfolio item deleted.");
+        res.json({ success: true });
+      }
+    }
+  );
+});
 
 app.post("/api/save-report", async (req, res) => {
   console.debug("/api/save-report");
