@@ -26,6 +26,35 @@ app.get("/api/portfolio", (req, res) => {
   console.debug(`fetched ${jsonData.portfolio.length} items`);
 });
 
+const filePath = path.join(__dirname, "data/portfolio.json");
+app.post("/api/portfolio-add", async (req, res) => {
+  console.debug("/api/portfolio-add");
+
+  // Read the existing data from portfolio.json
+  fs.readFile(filePath, (err, data) => {
+    if (err) res.status(500).json({ success: false, err });
+
+    let jsonObj;
+
+    try {
+      // Parse the JSON data
+      jsonObj = JSON.parse(data);
+    } catch (parseErr) {
+      console.error("Error parsing JSON:", parseErr);
+      res.status(500).json({ success: false, parseErr });
+      return;
+    }
+
+    jsonObj.portfolio.push(req.body);
+
+    // Write the updated data back to portfolio.json
+    fs.writeFile(filePath, JSON.stringify(jsonObj, null, 2), (err) => {
+      if (err) res.status(500).json({ success: false, err });
+      console.log("Portfolio item added successfully.");
+    });
+  });
+});
+
 function readData() {
   const filePath = path.join(__dirname, "data/portfolio.json");
   const rawData = fs.readFileSync(filePath);
