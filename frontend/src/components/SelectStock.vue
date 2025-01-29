@@ -1,21 +1,10 @@
 <script setup lang="ts">
+import { PortfolioItem } from '@/assets/PortfolioItem';
 import axios from 'axios';
 import { computed, ref, watchEffect } from 'vue';
 import { useSelectedStockStore } from '../stores/selectedstock';
 
 const selectedItem = useSelectedStockStore();
-
-class PortfolioItem {
-  id: string;
-  name: string;
-  ticker_symbol: string;
-
-  constructor(id: string, name: string, ticker_symbol: string) {
-    this.id = id;
-    this.name = name;
-    this.ticker_symbol = ticker_symbol;
-  }
-}
 
 const portfolio = ref<PortfolioItem[]>([]);
 const nextId = computed(() => (portfolio.value.length + 1).toString());

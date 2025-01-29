@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import { useSelectedStockStore } from './stores/selectedstock'
 import { ref } from 'vue';
-import ToolingIcon from './components/icons/IconTooling.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import ToolingIcon from './components/icons/IconTooling.vue';
+import { useSelectedStockStore } from './stores/selectedstock';
 
 const selectedItem = useSelectedStockStore()
 
@@ -11,6 +11,7 @@ const links = ref([
   { to: '/selectstock', text: 'Select Stock' },
   { to: '/fundamentalanlysis', text: 'Fundamental Analysis' },
   { to: '/technicalanalysis', text: 'Technical Analysis' },
+  { to: '/stockadviceanlysis', text: 'Stock Advice Analysis' },
   { to: '/about', text: 'About' }
 ]);
 </script>

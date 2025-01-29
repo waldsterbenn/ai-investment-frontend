@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useSelectedStockStore } from '../stores/selectedstock'
+import { useReportStore } from '../stores/tareport'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
 import SupportIcon from './icons/IconSupport.vue'
-import { computed, ref } from 'vue'
-import { useReportStore } from '../stores/tareport'
-import { useSelectedStockStore } from '../stores/selectedstock'
+import ToolingIcon from './icons/IconTooling.vue'
 
 const selectedItem = useSelectedStockStore()
 const report = useReportStore()
@@ -111,17 +110,27 @@ const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
               </template>
             </WelcomeItem>
           </div>
-          <!-- <WelcomeItem>
-    <template #icon>
-      <SupportIcon />
-    </template>
-    <template #heading>Advice</template>
-    Review your personal assesment.
+          <div class="card-body">
+            <WelcomeItem>
+              <template #icon>
+                <SupportIcon />
+              </template>
+              <template #heading>Advice</template>
+              <template #actionbutton>
+                <RouterLink to="/stockadviceanlysis">
+                  <button class="btn btn-primary" type="button">
+                    Advice analysis
+                  </button>
+                </RouterLink>
+              </template>
+              <template #content>
+                Review your personal assesment.
+              </template>
+            </WelcomeItem>
+            <footer class="card-footer text-end">
 
-  </WelcomeItem> -->
-          <!-- <footer class="card-footer text-end">
-
-          </footer> -->
+            </footer>
+          </div>
         </div>
       </div>
       <div class="col col-lg-2">

@@ -33,6 +33,11 @@ const router = createRouter({
       name: 'Fundamental Analysis',
       component: () => import('../components/FundamentalAnalysis.vue'),
     },
+    {
+      path: '/stockadviceanlysis',
+      name: 'Stock Advice Analysis',
+      component: () => import('../components/StockAdviceAnalysis.vue'),
+    },
   ],
 })
 
