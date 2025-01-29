@@ -89,19 +89,15 @@ async function runTechicalAnalysis(_event: unknown) {
 
 <style lang="css" scoped>
 .markdown {
-  /* display: inline-block; */
   overflow: auto;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   padding: 0 16px;
+  background-color: rgb(60, 60, 70);
 }
 
 .pre-container {
-  /* border-color: var(--color-border);
-  border-width: 1px;
-  border-style: solid; */
-
   white-space: pre-wrap;
   /* Keeps line breaks */
   word-break: break-word;
@@ -115,6 +111,5 @@ async function runTechicalAnalysis(_event: unknown) {
 .error-message {
   font-weight: bold;
   color: var(--color-text);
-  /* red color */
 }
 </style>
