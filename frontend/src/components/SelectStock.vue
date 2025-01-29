@@ -2,7 +2,7 @@
 import { PortfolioItem } from '@/assets/PortfolioItem';
 import axios from 'axios';
 import { computed, ref, watchEffect } from 'vue';
-import { useSelectedStockStore } from '../stores/selectedstock';
+import { useSelectedStockStore } from '../stores/selected_stock_store';
 
 const selectedItem = useSelectedStockStore();
 

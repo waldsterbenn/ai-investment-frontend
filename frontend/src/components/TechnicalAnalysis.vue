@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
+import { useTechicalReportStore } from '@/stores/report_techical_store';
 import axios from 'axios';
 import { marked } from 'marked';
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useSelectedStockStore } from '../stores/selectedstock';
-import { useReportStore } from '../stores/tareport';
+import { useSelectedStockStore } from '../stores/selected_stock_store';
 
-const reportStore = useReportStore()
+const reportStore = useTechicalReportStore()
 const selectedItem = useSelectedStockStore()
 
 const isRunningAnalysis = ref(false);

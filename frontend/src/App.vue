@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
 import ToolingIcon from './components/icons/IconTooling.vue';
-import { useSelectedStockStore } from './stores/selectedstock';
+import { useSelectedStockStore } from './stores/selected_stock_store';
 
 const selectedItem = useSelectedStockStore()
 

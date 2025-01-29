@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useTechicalReportStore } from '@/stores/report_techical_store'
+import { useSelectedStockStore } from '@/stores/selected_stock_store'
 import { computed } from 'vue'
-import { useSelectedStockStore } from '../stores/selectedstock'
-import { useReportStore } from '../stores/tareport'
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
@@ -9,7 +9,7 @@ import SupportIcon from './icons/IconSupport.vue'
 import ToolingIcon from './icons/IconTooling.vue'
 
 const selectedItem = useSelectedStockStore()
-const report = useReportStore()
+const report = useTechicalReportStore()
 
 const isStockSlected = computed(() => Boolean(selectedItem?.stock !== null && selectedItem.stock !== undefined))
 const isTaComplete = computed(() => Boolean(report?.report?.length > 0))

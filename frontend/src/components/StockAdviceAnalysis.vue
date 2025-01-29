@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
 import type { PortfolioItem } from '@/assets/PortfolioItem';
-import { useAdviceReportStore } from '@/stores/advice_report';
-import { useFundamentalReportStore } from '@/stores/fundamental_report';
+import { useAdviceReportStore } from '@/stores/report_advice_store';
+import { useFundamentalReportStore } from '@/stores/report_fundamental_store';
+import { useTechicalReportStore } from '@/stores/report_techical_store';
 import axios from 'axios';
 import { marked } from 'marked';
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useSelectedStockStore } from '../stores/selectedstock';
-import { useReportStore } from '../stores/tareport';
+import { useSelectedStockStore } from '../stores/selected_stock_store';
 
-const techicalStore = useReportStore();
+const techicalStore = useTechicalReportStore();
 const fundamentalStore = useFundamentalReportStore();
 const adviceStore = useAdviceReportStore();
 const selectedItemStore = useSelectedStockStore();

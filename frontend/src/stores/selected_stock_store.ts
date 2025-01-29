@@ -1,7 +1,7 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-export const useSelectedStockStore = defineStore('selectedstock', () => {
+export const useSelectedStockStore = defineStore('selected_stock_store', () => {
   const stock = ref()
 
   function update(newVal: object) {
