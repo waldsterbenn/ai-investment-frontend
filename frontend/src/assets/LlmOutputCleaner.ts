@@ -1,7 +1,7 @@
 export class LlmOutputCleaner {
   static clean(report: string): string {
     if (!report) {
-      return report
+      return ''
     }
 
     const parts = report.split('</think>')
