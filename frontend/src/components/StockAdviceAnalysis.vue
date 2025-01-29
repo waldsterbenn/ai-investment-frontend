@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
 import type { PortfolioItem } from '@/assets/PortfolioItem';
 import { useAdviceReportStore } from '@/stores/advice_report';
 import { useFundamentalReportStore } from '@/stores/fundamental_report';
@@ -15,36 +16,28 @@ const adviceStore = useAdviceReportStore();
 const selectedItemStore = useSelectedStockStore();
 const selectedStock: PortfolioItem = selectedItemStore.stock ?? null;
 
+const getReportText = () => LlmOutputCleaner.clean(adviceStore.report);
+const canRunAnalysis: boolean = selectedStock !== null && (!!techicalStore.report || !!fundamentalStore.report);
+const isRunningAnalysis = ref(false);
+
 const output = computed(() => {
-  const report = adviceStore.report;
-  if (!report) return "";
-
-  const parts = report.split("</think>");
-  if (parts.length < 2) return "";
-
-  const s = parts[1];
   try {
-    return marked(s);
+    return marked(getReportText());
   } catch (error) {
     console.error("Error parsing Markdown:", error);
     return "";
   }
 });
 
-const canRunAnalysis: boolean = selectedStock !== null && (!!techicalStore.report || !!fundamentalStore.report);
-
-const isRunningAnalysis = ref(false);
-
 async function copyToClipboard(_event: unknown) {
-  await navigator.clipboard.writeText(techicalStore.report);
-  alert("Copied");
+  await navigator.clipboard.writeText(getReportText());
+  alert("Copied to clipboard");
 }
 
 async function runAdviceAnalysis(_event: unknown) {
   if (!isRunningAnalysis.value) {
     isRunningAnalysis.value = true;
     const payload = { 'TECHREPORT': techicalStore.report ?? "Tech test", 'FINREPORT': fundamentalStore.report ?? "Funda test" };
-    //taReport.updateReport("");
     try {
       const response = await axios.post('http://localhost:3001/api/run-advice',
         payload,

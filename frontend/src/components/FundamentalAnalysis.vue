@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
 import { useFundamentalReportStore } from '@/stores/fundamental_report';
 import { useSelectedStockStore } from '@/stores/selectedstock';
 import axios from 'axios';
@@ -6,27 +7,35 @@ import { marked } from 'marked';
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
-const report = useFundamentalReportStore()
+const reportStore = useFundamentalReportStore()
 const selectedItem = useSelectedStockStore()
 
-const output = computed(() => marked(report.report));
-
+const getReportText = () => LlmOutputCleaner.clean(reportStore.report);
 const isRunningAnalysis = ref(false);
 
+const output = computed(() => {
+  try {
+    return marked(getReportText());
+  } catch (error) {
+    console.error("Error parsing Markdown:", error);
+    return "";
+  }
+});
+
 async function copyToClipboard(_event: unknown) {
-  await navigator.clipboard.writeText(report.report);
-  alert("Copied");
+  await navigator.clipboard.writeText(getReportText());
+  alert("Copied to clipboard");
 }
 
 async function runAnalysis(_event: unknown) {
   if (!isRunningAnalysis.value) {
     isRunningAnalysis.value = true;
     try {
-      report.updateReport("");
+      reportStore.updateReport("");
       const response = await axios.post('http://localhost:3001/api/run-financial-analysis',
         selectedItem.stock,
         { headers: { 'Content-Type': 'application/json' }, });
-      report.updateReport(response.data.report);
+      reportStore.updateReport(response.data.report);
     } catch (error) {
       console.error(error);
       alert(error);
@@ -43,7 +52,7 @@ async function runAnalysis(_event: unknown) {
     <div class="pre-container">
       <div class="card">
         <footer class="card-footer text-end">
-          <button @click="copyToClipboard" v-bind:disabled="report.report == null" class="btn btn-secondary me-2"
+          <button @click="copyToClipboard" v-bind:disabled="reportStore.report == null" class="btn btn-secondary me-2"
             type="button">Copy
             to clipboard
           </button>
@@ -64,11 +73,11 @@ async function runAnalysis(_event: unknown) {
             know what to
             analyse
           </span>
-          <span v-else-if="selectedItem.stock != null && report.report == null">You can run an analysis on {{
+          <span v-else-if="selectedItem.stock != null && reportStore.report == null">You can run an analysis on {{
             selectedItem.stock.name }},
             it may take a while.</span>
 
-          <div v-if="report.report != null" class="markdown" v-html="output"></div>
+          <div v-if="reportStore.report != null" class="markdown" v-html="output"></div>
 
         </div>
 
