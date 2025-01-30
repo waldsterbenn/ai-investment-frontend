@@ -12,6 +12,7 @@ const links = ref([
   { to: '/fundamentalanlysis', text: 'Fundamental Analysis' },
   { to: '/technicalanalysis', text: 'Technical Analysis' },
   { to: '/stockadviceanlysis', text: 'Stock Advice Analysis' },
+  { to: '/stockagentanalysis', text: 'Stock Agent' },
   { to: '/about', text: 'About' }
 ]);
 </script>
@@ -22,34 +23,40 @@ const links = ref([
 
       <nav class="navbar navbar-expand-lg bg-primary-subtle border border-primary rounded mb-2">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/"><button class="btn btn-secondary" type="button">
-              Reset
-            </button></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item" v-for="(link, index) in links" :key="index">
 
-                <RouterLink :to="link.to" class="m-2 nav-link">
-                  <button class="btn btn-primary" type="button">
-                    {{ link.text }}
-                  </button>
-                </RouterLink>
-              </li>
-            </ul>
-
-            <span class="nav-text" v-if="selectedItem.stock">
-              <ToolingIcon /> {{ selectedItem.stock.name }} ({{ selectedItem.stock.ticker_symbol }})
+          <div class="hstack"><span class="nav-text badge text-bg-info me-2" v-if="selectedItem.stock">
+              <ToolingIcon /> {{ selectedItem.stock.ticker_symbol }}
               <!-- <p>Buy Price: {{ selectedItem.stock.buy_price }} {{ selectedItem.stock.currency }}</p>
                   <p>Buy Date: {{ selectedItem.stock.buy_date }}</p> -->
             </span>
             <span class="nav-text" v-else>
               No company selected
             </span>
+            <div class="vr"></div>
+          </div>
+
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- <a class="navbar-brand" href="/"><button class="btn btn-secondary ms-4" type="button">
+                Reset
+              </button>
+            </a> -->
+            <ul class="navbar-nav nav nav-pills nav-justified me-auto mb-2 mb-lg-0">
+              <li class="nav-item" v-for="(link, index) in links" :key="index">
+
+                <RouterLink :to="link.to" class=" nav-link">
+                  <!-- <button class="btn btn-primary" type="button"> -->
+                  {{ link.text }}
+                  <!-- </button> -->
+                </RouterLink>
+              </li>
+            </ul>
+
 
           </div>
         </div>

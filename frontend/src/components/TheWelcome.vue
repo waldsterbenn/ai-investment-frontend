@@ -131,6 +131,27 @@ const isTaComplete = computed(() => Boolean(report?.report?.length > 0))
 
             </footer>
           </div>
+          <div class="card-body">
+            <WelcomeItem>
+              <template #icon>
+                <ToolingIcon />
+              </template>
+              <template #heading>Stock Agent</template>
+              <template #actionbutton>
+                <RouterLink to="/stockagentanalysis">
+                  <button class="btn btn-primary" type="button">
+                    Stock Agent
+                  </button>
+                </RouterLink>
+              </template>
+              <template #content>
+                Let the AI agent run a complete analysis on the stock.
+              </template>
+            </WelcomeItem>
+            <footer class="card-footer text-end">
+
+            </footer>
+          </div>
         </div>
       </div>
       <div class="col col-lg-2">

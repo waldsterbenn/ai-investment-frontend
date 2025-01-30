@@ -35,8 +35,13 @@ const router = createRouter({
     },
     {
       path: '/stockadviceanlysis',
-      name: 'Stock Advice Analysis',
+      name: 'Stock Advice',
       component: () => import('../components/StockAdviceAnalysis.vue'),
+    },
+    {
+      path: '/stockagentanalysis',
+      name: 'Stock Agent',
+      component: () => import('../components/StockAgent.vue'),
     },
   ],
 })

@@ -55,6 +55,13 @@
       "buy_price": 203.2,
       "currency": "NOK",
       "buy_date": "2025-01-01"
+    },
+    {
+      "name": "Axon Enterprise",
+      "ticker_symbol": "AXON",
+      "buy_price": 0,
+      "currency": "",
+      "buy_date": ""
     }
   ]
 }

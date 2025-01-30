@@ -15,7 +15,7 @@ const isRunningAnalysis = ref(false);
 
 const output = computed(() => {
   try {
-    return marked(getReportText());
+    return marked(getReportText(), { pedantic: true, silent: true });
   } catch (error) {
     console.error("Error parsing Markdown:", error);
     return "";

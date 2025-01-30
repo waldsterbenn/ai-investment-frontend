@@ -1,23 +1,19 @@
 <script setup lang="ts">
 import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
 import type { PortfolioItem } from '@/assets/PortfolioItem';
-import { useAdviceReportStore } from '@/stores/report_advice_store';
-import { useFundamentalReportStore } from '@/stores/report_fundamental_store';
-import { useTechicalReportStore } from '@/stores/report_techical_store';
+import { useAgentReportStore } from '@/stores/report_agent_store';
 import axios from 'axios';
 import { marked } from 'marked';
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useSelectedStockStore } from '../stores/selected_stock_store';
 
-const techicalStore = useTechicalReportStore();
-const fundamentalStore = useFundamentalReportStore();
-const adviceStore = useAdviceReportStore();
+const agentReportStore = useAgentReportStore();
 const selectedItemStore = useSelectedStockStore();
 const selectedStock: PortfolioItem = selectedItemStore.stock ?? null;
 
-const getReportText = () => LlmOutputCleaner.clean(adviceStore.report);
-const canRunAnalysis: boolean = selectedStock !== null && (!!techicalStore.report || !!fundamentalStore.report);
+const getReportText = () => LlmOutputCleaner.clean(agentReportStore.report);
+const canRunAnalysis: boolean = selectedStock !== null;
 const isRunningAnalysis = ref(false);
 
 const output = computed(() => {
@@ -37,12 +33,11 @@ async function copyToClipboard(_event: unknown) {
 async function runAdviceAnalysis(_event: unknown) {
   if (!isRunningAnalysis.value) {
     isRunningAnalysis.value = true;
-    const payload = { 'TECHREPORT': techicalStore.report ?? "Tech test", 'FINREPORT': fundamentalStore.report ?? "Funda test" };
     try {
-      const response = await axios.post('http://localhost:3001/api/run-advice',
-        payload,
+      const response = await axios.post('http://localhost:3001/api/run-stock-agent',
+        selectedStock,
         { headers: { 'Content-Type': 'application/json' }, });
-      adviceStore.updateReport(response.data.report);
+      agentReportStore.updateReport(response.data.report);
       //markdownText.value = response.data.report;
     } catch (error) {
       console.error(error);
@@ -60,8 +55,8 @@ async function runAdviceAnalysis(_event: unknown) {
     <div class="pre-container">
       <div class="card">
         <footer class="card-footer text-end">
-          <button @click="copyToClipboard" v-bind:disabled="adviceStore.report == null" class="btn btn-secondary me-2"
-            type="button">Copy
+          <button @click="copyToClipboard" v-bind:disabled="agentReportStore.report == null"
+            class="btn btn-secondary me-2" type="button">Copy
             to clipboard
           </button>
 
@@ -81,13 +76,19 @@ async function runAdviceAnalysis(_event: unknown) {
             know what to
             analyse
           </span>
-          <span v-else-if="canRunAnalysis">You can run an analysis on {{
-            selectedStock.name }},
-            it may take a while.</span>
-          <span v-else>You must run at least a Techical or Fundamental analysis (or both) before you can get
-            advice.</span>
-
-          <div v-if="adviceStore.report !== null" class="markdown" v-html="output"></div>
+          <div v-else-if="canRunAnalysis">
+            <span>You can run an analysis on {{
+              selectedStock.name }}.</span>
+            <div class="hr"></div>
+            <span>The agent runs through multiple steps, like fetching stock data, run techical and fundamental analysis
+              on the numbers,
+              and analyse what the numbers mean.</span>
+            <div class="hr"></div>
+            <span>Afterwards it cretiques it's own work and produce a report, so you can make an informed desission.
+              It's a lot of work, so it may take a while.
+            </span>
+          </div>
+          <div v-if="agentReportStore.report !== null" class="markdown" v-html="output"></div>
         </div>
 
       </div>
