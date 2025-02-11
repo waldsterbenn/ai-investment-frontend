@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { useTechicalReportStore } from '@/stores/report_techical_store';
 import { LlmOutputCleaner } from '@/utils/LlmOutputCleaner';
+import { Timer } from '@/utils/Timer';
 import axios from 'axios';
 import { marked } from 'marked';
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useSelectedStockStore } from '../stores/selected_stock_store';
 
-const reportStore = useTechicalReportStore()
-const selectedItem = useSelectedStockStore()
+const reportStore = useTechicalReportStore();
+const selectedItem = useSelectedStockStore();
 
 const isRunningAnalysis = ref(false);
+const timer = new Timer();
 const getReportText = () => LlmOutputCleaner.clean(reportStore.report);
 
 const output = computed(() => {
@@ -30,6 +32,7 @@ async function copyToClipboard(_event: unknown) {
 async function runTechicalAnalysis(_event: unknown) {
   if (!isRunningAnalysis.value) {
     isRunningAnalysis.value = true;
+    timer.start();
     reportStore.updateReport("");
     try {
       const response = await axios.post('http://localhost:3001/api/run-technical-analysis',
@@ -41,6 +44,7 @@ async function runTechicalAnalysis(_event: unknown) {
       alert(error);
     } finally {
       isRunningAnalysis.value = false;
+      timer.stop();
     }
   }
 }
@@ -53,13 +57,12 @@ async function runTechicalAnalysis(_event: unknown) {
       <div class="card">
         <footer class="card-footer text-end">
           <button @click="copyToClipboard" v-bind:disabled="reportStore.report == null" class="btn btn-secondary me-2"
-            type="button">Copy
-            to clipboard
+            type="button">Copy to clipboard
           </button>
 
           <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Analysing...
+            Working ({{ timer.formattedElapsedTime }})
           </button>
           <button @click="runTechicalAnalysis" v-bind:hidden="isRunningAnalysis"
             v-bind:disabled="selectedItem.stock == null" class="btn btn-primary" type="button"
@@ -69,14 +72,10 @@ async function runTechicalAnalysis(_event: unknown) {
         <div class="card-body">
           <span v-if="selectedItem.stock == null" class="card-text">You must
             <RouterLink class="card-link" to="selectstock">{{ "select a stock" }}</RouterLink>
-            before
-            we
-            know what to
-            analyse
+            before we know what to analyze.
           </span>
           <span v-else-if="selectedItem.stock != null && reportStore.report == null">You can run an analysis on {{
-            selectedItem.stock.name }},
-            it may take a while.</span>
+            selectedItem.stock.name }}, it may take a while.</span>
 
           <div v-if="reportStore.report != null" class="markdown" v-html="output"></div>
 
@@ -99,13 +98,10 @@ async function runTechicalAnalysis(_event: unknown) {
 
 .pre-container {
   white-space: pre-wrap;
-  /* Keeps line breaks */
   word-break: break-word;
-  /* Breaks words on line breaks */
   width: 100%;
   height: 100%;
   overflow: scroll;
-  /* Scrolls when content is larger than container */
 }
 
 .error-message {

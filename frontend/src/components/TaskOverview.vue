@@ -6,10 +6,6 @@ import { useTechicalReportStore } from '@/stores/report_techical_store'
 import { useSelectedStockStore } from '@/stores/selected_stock_store'
 import { computed } from 'vue'
 import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import SupportIcon from './icons/IconSupport.vue'
-import ToolingIcon from './icons/IconTooling.vue'
 
 const selectedItem = useSelectedStockStore()
 const techicalReport = useTechicalReportStore()
@@ -17,7 +13,7 @@ const fundamentalReport = useFundamentalReportStore()
 const adviceReport = useAdviceReportStore()
 const agentReport = useAgentReportStore()
 
-const isStockSlected = computed(() => Boolean(selectedItem?.stock !== null && selectedItem.stock !== undefined))
+const isStockSelected = computed(() => Boolean(selectedItem?.stock !== null && selectedItem.stock !== undefined))
 const isFundamentalReportComplete = computed(() => Boolean(fundamentalReport?.report?.length > 0))
 const isTechicalReportComplete = computed(() => Boolean(techicalReport?.report?.length > 0))
 const isAdviceReportComplete = computed(() => Boolean(adviceReport?.report?.length > 0))
@@ -32,21 +28,26 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
       <div class="col col-md-auto">
         <div class="card">
           <header class="card-header">
-            <span class="card-text">Follow these steps to perform a detailed analysis of a stock, including fundamental
+            <span class="card-text">Follow the steps to perform a detailed analysis of a stock, including fundamental
               and technical evaluations, and receive expert advice.</span>
+            <div class="hr"></div>
+            <i>You can either let the AI agent do the
+              work,
+              or make
+              a customized analysis, comprised of the elements you want.</i>
           </header>
           <div class="card-body">
             <WelcomeItem>
               <template #icon>
-                <ToolingIcon />
+                <i class="bi bi-diagram-3"></i>
               </template>
               <template #heading>
                 Select Company
               </template>
               <template #content>
                 <div class="row">
-                  <div class="col-auto text-start">
-                    <span v-if="isStockSlected">
+                  <div class="col text-start">
+                    <span v-if="isStockSelected">
                       <i class="bi bi-check-square-fill"></i>
                       Stock has been selected.
                     </span>
@@ -57,8 +58,13 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                   <div class="col text-end">
                     <RouterLink to="/selectstock">
-                      <button class="btn btn-primary" type="button">
-                        Select stock
+                      <button class="btn btn-primary btn-sm" type="button">
+                        <span v-if="isStockSelected">
+                          Select new stock
+                        </span>
+                        <span v-else>
+                          Select stock
+                        </span>
                       </button>
                     </RouterLink>
                   </div>
@@ -84,12 +90,12 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                     </span>
                     <span v-else>
                       <i class="bi bi-check-square"></i>
-                      Let the AI agent run a complete analysis on the stock.
+                      Let the AI agent run autonomously and create an analysis on the stock, for you to read.
                     </span>
                   </div>
                   <div class="col text-end">
                     <RouterLink to="/stockagentanalysis">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary btn-sm" type="button">
                         <span v-if="isAgentReportComplete">
                           View report
                         </span>
@@ -107,10 +113,10 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
           <div class="card-body">
             <WelcomeItem>
               <template #icon>
-                <DocumentationIcon />
+                <i class="bi bi-card-checklist"></i>
               </template>
               <template #heading>
-                Fundamental analysis
+                Custom analysis
               </template>
               <template #content>
                 <div class="row">
@@ -126,7 +132,8 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                   <div class="col text-end">
                     <RouterLink to="/fundamentalanalysis">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary btn-sm" type="button">
+                        <i class="bi bi-book"></i>
                         <span v-if="isFundamentalReportComplete">
                           View report
                         </span>
@@ -137,20 +144,8 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                     </RouterLink>
                   </div>
                 </div>
-              </template>
-            </WelcomeItem>
-          </div>
 
-          <div class="card-body">
-            <WelcomeItem>
-              <template #icon>
-                <EcosystemIcon />
-              </template>
-              <template #heading>
-                Technical analysis
-              </template>
-              <template #content>
-                <div class="row">
+                <div class="row mt-3">
                   <div class="col-auto text-start">
                     <span v-if="isTechicalReportComplete">
                       <i class="bi bi-check-square-fill"></i>
@@ -163,7 +158,8 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                   <div class="col text-end">
                     <RouterLink to="/technicalanalysis">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary btn-sm" type="button">
+                        <i class="bi bi-graph-up"></i>
                         <span v-if="isTechicalReportComplete">
                           View report
                         </span>
@@ -174,20 +170,8 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                     </RouterLink>
                   </div>
                 </div>
-              </template>
-            </WelcomeItem>
-          </div>
 
-          <div class="card-body">
-            <WelcomeItem>
-              <template #icon>
-                <SupportIcon />
-              </template>
-              <template #heading>
-                Advice
-              </template>
-              <template #content>
-                <div class="row">
+                <div class="row mt-3">
                   <div class="col-auto text-start">
                     <span v-if="isAdviceReportComplete">
                       <i class="bi bi-check-square-fill"></i>
@@ -200,7 +184,8 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                   <div class="col text-end">
                     <RouterLink to="/stockadviceanalysis">
-                      <button class="btn btn-primary" type="button">
+                      <button class="btn btn-primary btn-sm" type="button">
+                        <i class="bi bi-heart"></i>
                         <span v-if="isAdviceReportComplete">
                           View report
                         </span>
@@ -215,7 +200,6 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
             </WelcomeItem>
           </div>
 
-
         </div>
       </div>
       <div class="col col-lg-2">
@@ -223,3 +207,14 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
     </div>
   </div>
 </template>
+
+<style scoped>
+.hr {
+  border-top: 1px solid #dee2e6;
+  margin: 1rem 0;
+}
+
+.btn {
+  width: 12rem;
+}
+</style>
