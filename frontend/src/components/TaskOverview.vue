@@ -5,7 +5,7 @@ import { useFundamentalReportStore } from '@/stores/report_fundamental_store'
 import { useTechicalReportStore } from '@/stores/report_techical_store'
 import { useSelectedStockStore } from '@/stores/selected_stock_store'
 import { computed } from 'vue'
-import WelcomeItem from './WelcomeItem.vue'
+import WelcomeItem from './TaskOverviewTemplateItem.vue'
 
 const selectedItem = useSelectedStockStore()
 const techicalReport = useTechicalReportStore()

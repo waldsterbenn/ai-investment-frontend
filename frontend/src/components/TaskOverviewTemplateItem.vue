@@ -8,9 +8,6 @@
     <div class="card-body">
       <slot name="content" class="card-text"></slot>
     </div>
-    <!-- <div class="card-footer text-end">
-      <slot name="actionbutton"></slot>
-    </div> -->
   </div>
 </template>
 
