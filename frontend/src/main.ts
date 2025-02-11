@@ -1,7 +1,7 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 
 import App from './App.vue'
 import router from './router'
@@ -11,6 +11,8 @@ import router from './router'
 import './scss/styles.scss'
 // Import all of Bootstrap's JS
 import 'bootstrap'
+// Import Bootstrap Icons CSS
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const app = createApp(App)
 app.config.errorHandler = (err, instance, info) => {

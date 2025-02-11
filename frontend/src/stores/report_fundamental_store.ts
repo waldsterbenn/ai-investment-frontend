@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useFundamentalReportStore = defineStore('report_fundamental_store', () => {
-  const report = ref(test)
+  const report = ref()
   function updateReport(text: string) {
     report.value = text
   }

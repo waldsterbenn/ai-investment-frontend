@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PortfolioItem } from '@/assets/PortfolioItem';
+import { PortfolioItem } from '@/utils/PortfolioItem';
 import axios from 'axios';
 import { computed, ref, watchEffect } from 'vue';
 import { useSelectedStockStore } from '../stores/selected_stock_store';
@@ -76,7 +76,6 @@ async function deleteStock(ticker_symbol: string) {
       <div class="col col-md-auto">
         <div class="card">
           <header class="card-header">
-            <h3 class="card-title">Portfolio with available companies</h3>
             <span class="card-text">Select a company to continue with the investigation.</span>
           </header>
           <div class="card-body">
@@ -116,7 +115,7 @@ async function deleteStock(ticker_symbol: string) {
                 {{ item.name }} ({{ item.ticker_symbol }})
               </label>
               <!-- Remove Button -->
-              <button @click.prevent="deleteStock(item.ticker_symbol)" class="btn btn-danger btn-close ml-2">
+              <button @click.prevent="deleteStock(item.ticker_symbol)" class="btn bi-trash ml-2">
 
               </button>
             </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
 import { useFundamentalReportStore } from '@/stores/report_fundamental_store';
 import { useSelectedStockStore } from '@/stores/selected_stock_store';
+import { LlmOutputCleaner } from '@/utils/LlmOutputCleaner';
 import axios from 'axios';
 import { marked } from 'marked';
 import { computed, ref } from 'vue';

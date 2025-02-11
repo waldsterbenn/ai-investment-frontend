@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { LlmOutputCleaner } from '@/assets/LlmOutputCleaner';
-import type { PortfolioItem } from '@/assets/PortfolioItem';
 import { useAdviceReportStore } from '@/stores/report_advice_store';
 import { useFundamentalReportStore } from '@/stores/report_fundamental_store';
 import { useTechicalReportStore } from '@/stores/report_techical_store';
+import { LlmOutputCleaner } from '@/utils/LlmOutputCleaner';
+import type { PortfolioItem } from '@/utils/PortfolioItem';
 import axios from 'axios';
 import { marked } from 'marked';
 import { computed, ref } from 'vue';
