@@ -9,6 +9,6 @@ export class LlmOutputCleaner {
       return report
     }
 
-    return parts[1]
+    return parts[1].replace('`', '')
   }
 }

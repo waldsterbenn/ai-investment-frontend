@@ -74,7 +74,7 @@ async function runAdviceAnalysis(_event: unknown) {
             <RouterLink class="card-link" to="selectstock">{{ "select a stock" }}</RouterLink>
             before we know what to analyze.
           </span>
-          <div v-else-if="canRunAnalysis">
+          <div v-else-if="canRunAnalysis && !agentReportStore.report">
             <blockquote class="blockquote">
               <span class="card-text">
                 Let the agent analyze {{ selectedStock.name }}.

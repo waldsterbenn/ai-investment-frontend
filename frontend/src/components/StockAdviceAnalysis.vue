@@ -25,6 +25,7 @@ const output = computed(() => {
     return marked(getReportText(), { pedantic: true, silent: true });
   } catch (error) {
     console.error("Error parsing Markdown:", error);
+    alert("Error parsing Markdown: " + error);
     return "";
   }
 });
