@@ -9,7 +9,12 @@ export class LlmOutputCleaner {
       report = parts[1]
     }
 
-    return report.replace('`', '').trimExcessQuotes().replaceLiteralNewlines().trim()
+    return report
+      .replace('`', '')
+      .replace('b"', '')
+      .trimExcessQuotes()
+      .replaceLiteralNewlines()
+      .trim()
   }
 }
 

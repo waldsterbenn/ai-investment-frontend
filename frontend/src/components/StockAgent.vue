@@ -14,12 +14,10 @@ const selectedItemStore = useSelectedStockStore();
 const selectedStock: PortfolioItem = selectedItemStore.stock ?? null;
 
 const getReportText = () => LlmOutputCleaner.clean(agentReportStore.report);
+const getHtmlTable = () => LlmOutputCleaner.clean(agentReportStore.htmlTable);
 const canRunAnalysis: boolean = selectedStock !== null;
 const isRunningAnalysis = ref(false);
 const timer = new Timer();
-
-const indicatorTableData = ref<string>();
-// const indicatorTableData = ref<string>("b'\\n<table border=\"1\">\\n  <tr>\\n    <th colspan=\"2\">Key Technical Indicators and Fundamentals for ABB (ABB.ST)</th>\\n  </tr>\\n  <tr>\\n    <th>Indicator</th>\\n    <th>Value</th>\\n  </tr>\\n  <tr>\\n    <td>MACD (12,26,9)</td>\\n    <td>-17.35 (signal: 3.08, histogram: -20.43)</td>\\n  </tr>\\n  <tr>\\n    <td>ADX (14)</td>\\n    <td>34.59</td>\\n  </tr>\\n  <tr>\\n    <td>RSI</td>\\n    <td>41.2</td>\\n  </tr>\\n  <tr>\\n    <td>SMA (10)</td>\\n    <td>489.97</td>\\n  </tr>\\n  <tr>\\n    <td>SMA (50)</td>\\n    <td>548.63</td>\\n  </tr>\\n  <tr>\\n    <td>Forward P/E Ratio</td>\\n    <td>18.66</td>\\n  </tr>\\n  <tr>\\n    <td>Beta</td>\\n    <td>0.827</td>\\n  </tr>\\n  <tr>\\n    <td>Gross Margin (2024)</td>\\n    <td>40.2%</td>\\n  </tr>\\n  <tr>\\n    <td>Operating Margin (2024)</td>\\n    <td>17.1%</td>\\n  </tr>\\n  <tr>\\n    <td>Net Profit Margin (2024)</td>\\n    <td>13.7%</td>\\n  </tr>\\n  <tr>\\n    <td>Revenue Growth (2024 vs 2023)</td>\\n    <td>2.3%</td>\\n  </tr>\\n  <tr>\\n    <td>Net Income Growth (2024 vs 2023)</td>\\n    <td>5.1%</td>\\n  </tr>\\n  <tr>\\n    <td>Current Price</td>\\n    <td>491.8 SEK</td>\\n  </tr>\\n  <tr>\\n    <td>Target Mean Price</td>\\n    <td>643.62 SEK</td>\\n  </tr>\\n  <tr>\\n    <td>Upside Potential</td>\\n    <td>30.9%</td>\\n  </tr>\\n</table>\\n'");
 
 const output = computed(() => {
   try {
@@ -31,13 +29,15 @@ const output = computed(() => {
 });
 
 const indicatorTable = computed(() => {
-  let table = indicatorTableData.value;
+  let table = getHtmlTable();
   if (table) {
     table = table
-      .replace("<table", '<table class="table table-striped table-bordered table-hover"')
+      .replace(/<table/g, '<table class="table table-striped table-bordered table-hover"')
       .replace("b'", "")
       .replace("\\n'", "")
-      .replace(/\\n/g, "\n");
+      .replace(/\\n/g, "\n")
+      .replace(/\\t/g, "\n")
+      .trim();
   }
   return table;
 });
@@ -60,7 +60,7 @@ async function runAdviceAnalysis(_event: unknown) {
       const re = LlmOutputCleaner.clean(jsonData.analysis);
       const table = LlmOutputCleaner.clean(jsonData.table);
       agentReportStore.updateReport(re);
-      indicatorTableData.value = table;
+      agentReportStore.updateTable(table);
     } catch (error) {
       console.error(error);
       alert(error);
