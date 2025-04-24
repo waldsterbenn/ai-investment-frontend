@@ -69,6 +69,13 @@
       "buy_price": 0,
       "currency": "",
       "buy_date": ""
+    },
+    {
+      "name": "ABB",
+      "ticker_symbol": "ABB.ST",
+      "buy_price": 0,
+      "currency": "",
+      "buy_date": ""
     }
   ]
 }

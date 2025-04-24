@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 export const useTechicalReportStore = defineStore('report_techical_store', () => {
   const report = ref()
+  //report.value = test
   function updateReport(text: string) {
     report.value = text
   }

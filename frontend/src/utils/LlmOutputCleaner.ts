@@ -5,10 +5,25 @@ export class LlmOutputCleaner {
     }
 
     const parts = report.split('</think>')
-    if (parts.length < 2) {
-      return report
+    if (parts.length >= 2) {
+      report = parts[1]
     }
 
-    return parts[1].replace('`', '')
+    return report.replace('`', '').trimExcessQuotes().replaceLiteralNewlines().trim()
   }
+}
+
+declare global {
+  interface String {
+    trimExcessQuotes(): string
+    replaceLiteralNewlines(): string
+  }
+}
+
+String.prototype.trimExcessQuotes = function (): string {
+  return this.replace(/^"+|"+$/g, '')
+}
+
+String.prototype.replaceLiteralNewlines = function (): string {
+  return this.replace(/\\n/g, '\n')
 }

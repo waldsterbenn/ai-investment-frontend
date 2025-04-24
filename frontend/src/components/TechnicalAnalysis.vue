@@ -8,6 +8,7 @@ import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useSelectedStockStore } from '../stores/selected_stock_store';
 
+const debugEnabled = false;
 const reportStore = useTechicalReportStore();
 const selectedItem = useSelectedStockStore();
 
@@ -18,6 +19,18 @@ const getReportText = () => LlmOutputCleaner.clean(reportStore.report);
 const output = computed(() => {
   try {
     return marked(getReportText(), { pedantic: true, silent: true });
+  } catch (error) {
+    console.error("Error parsing Markdown:", error);
+    return "";
+  }
+});
+
+const rawoutput = computed(() => {
+  if (!debugEnabled) {
+    return "";
+  }
+  try {
+    return marked(reportStore.report, { pedantic: true, silent: false });
   } catch (error) {
     console.error("Error parsing Markdown:", error);
     return "";
@@ -79,6 +92,10 @@ async function runTechicalAnalysis(_event: unknown) {
 
           <div v-if="reportStore.report != null" class="markdown" v-html="output"></div>
 
+          <div v-if="debugEnabled">
+            <div class="v">********</div>
+            <div v-if="reportStore.report != null" class="markdown" v-html="rawoutput"></div>
+          </div>
         </div>
 
       </div>
