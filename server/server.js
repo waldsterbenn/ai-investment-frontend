@@ -302,8 +302,8 @@ app.post("/api/run-stock-agent", async (req, res) => {
   childProcess.on("close", (code) => {
     if (code === 0) {
       console.debug("script sucess");
-      const report = output.split("REPORT:")[1];
-      res.json({ success: true, report });
+      const OUTPUTDATA = output.split("OUTPUTDATA:")[1];
+      res.json({ success: true, OUTPUTDATA: OUTPUTDATA });
     } else {
       console.debug("script failed", error);
       res.status(500).json({ success: false, error });
