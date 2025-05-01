@@ -11,7 +11,7 @@ With the app, you can run Techical or Fundamental analysis on a given company's 
 Running an analysis invokes the python backend, via a node.js service.
 ![screenshot2](screenshot2.png)
 
-The python backend leverage a local LLM to evaluate data from different sources, before generating a textual report. When the analysis is complete, the report will be displayed in the app, in markdown format.
+The python backend leverage an LLM to evaluate data from different sources, before generating a textual report. When the analysis is complete, the report will be displayed in the app, in markdown format.
 ![screenshot3](screenshot3.png)
 
 > Note that the setup and configuration of the LLM system is done in the [ai-investment-manager](https://github.com/waldsterbenn/ai-investment-manager) project.
