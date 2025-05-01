@@ -9,17 +9,17 @@ export const routes = [
   },
   {
     path: '/fundamentalanalysis',
-    name: 'Fundamental Analysis',
+    name: 'Fundamental',
     component: () => import('../components/FundamentalAnalysis.vue'),
   },
   {
     path: '/technicalanalysis',
-    name: 'Technical Analysis',
+    name: 'Technical',
     component: () => import('../components/TechnicalAnalysis.vue'),
   },
   {
     path: '/stockadviceanalysis',
-    name: 'Stock Advice Analysis',
+    name: 'Stock Advice',
     component: () => import('../components/StockAdviceAnalysis.vue'),
   },
   {

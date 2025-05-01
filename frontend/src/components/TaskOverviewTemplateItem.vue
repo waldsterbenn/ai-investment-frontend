@@ -2,7 +2,6 @@
   <div class="card">
     <header class="card-header">
       <slot name="icon"></slot>
-      <span class="me-1"></span>
       <slot name="heading"></slot>
     </header>
     <div class="card-body">

@@ -5,7 +5,7 @@ import { useFundamentalReportStore } from '@/stores/report_fundamental_store'
 import { useTechicalReportStore } from '@/stores/report_techical_store'
 import { useSelectedStockStore } from '@/stores/selected_stock_store'
 import { computed } from 'vue'
-import WelcomeItem from './TaskOverviewTemplateItem.vue'
+import TaskOverviewTemplateItem from './TaskOverviewTemplateItem.vue'
 
 const selectedItem = useSelectedStockStore()
 const techicalReport = useTechicalReportStore()
@@ -22,10 +22,9 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
 
 <template>
   <div class="container text-start">
-    <div class="row justify-content-md-center">
-      <div class="col col-lg-2">
-      </div>
-      <div class="col col-md-auto">
+    <div class="row justify-content-center">
+
+      <div class="col col-auto">
         <div class="card">
           <header class="card-header">
             <span class="card-text">Follow the steps to perform a detailed analysis of a stock, including fundamental
@@ -37,7 +36,7 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
               a customized analysis, comprised of the elements you want.</i>
           </header>
           <div class="card-body">
-            <WelcomeItem>
+            <TaskOverviewTemplateItem>
               <template #icon>
                 <i class="bi bi-diagram-3"></i>
               </template>
@@ -70,11 +69,11 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                 </div>
               </template>
-            </WelcomeItem>
+            </TaskOverviewTemplateItem>
           </div>
 
           <div class="card-body">
-            <WelcomeItem>
+            <TaskOverviewTemplateItem>
               <template #icon>
                 <i class="bi bi-robot"></i>
               </template>
@@ -107,11 +106,11 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                 </div>
               </template>
-            </WelcomeItem>
+            </TaskOverviewTemplateItem>
           </div>
 
           <div class="card-body">
-            <WelcomeItem>
+            <TaskOverviewTemplateItem>
               <template #icon>
                 <i class="bi bi-card-checklist"></i>
               </template>
@@ -197,23 +196,16 @@ const isAgentReportComplete = computed(() => Boolean(agentReport?.report?.length
                   </div>
                 </div>
               </template>
-            </WelcomeItem>
+            </TaskOverviewTemplateItem>
           </div>
-
         </div>
       </div>
-      <div class="col col-lg-2">
-      </div>
+
     </div>
   </div>
 </template>
 
 <style scoped>
-.hr {
-  border-top: 1px solid #dee2e6;
-  margin: 1rem 0;
-}
-
 .btn {
   width: 12rem;
 }

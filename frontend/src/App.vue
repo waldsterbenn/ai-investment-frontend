@@ -14,40 +14,38 @@ const links = ref(routes.filter(route => route.name).map(route => ({
 </script>
 
 <template>
-  <div class="container py-4 px-3 mx-auto">
+  <div class="container-fluid-sm container-md py-2 px-3 mt-4 mx-auto card border-primary ">
     <header>
-      <nav class="navbar navbar-expand-lg bg-primary-subtle border border-primary rounded mb-2">
-        <div class="container-fluid">
-          <div class="hstack">
-            <span class="nav-text badge text-bg-primary me-2" v-if="selectedItem.stock">
+      <nav class="navbar navbar-expand-lg">
+        <div class="hstack">
+          <span class="nav-text badge text-bg-primary me-2" v-if="selectedItem.stock">
+            <RouterLink :to="'/selectstock'" class="nav-link">
               <ToolingIcon /> {{ selectedItem.stock.ticker_symbol }}
-            </span>
-            <span class="nav-text badge text-bg-warning me-2" v-else>
-              <RouterLink :to="'/selectstock'" class="nav-link">
-                Select stock
-              </RouterLink>
-            </span>
-            <div class="vr"></div>
-          </div>
+            </RouterLink>
+          </span>
+          <span class="nav-text badge text-bg-warning me-2" v-else>
+            <RouterLink :to="'/selectstock'" class="nav-link">
+              Select stock
+            </RouterLink>
+          </span>
+        </div>
 
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav nav nav-pills nav-justified me-auto mb-2 mb-lg-0">
-              <li class="nav-item" v-for="(link, index) in links" :key="index">
-                <RouterLink :to="link.to" class="nav-link">
-                  {{ link.text }}
-                </RouterLink>
-              </li>
-            </ul>
-          </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav nav-tabs">
+            <li class="nav-item" v-for="(link, index) in links" :key="index">
+              <RouterLink :to="link.to" class="nav-link" active-class="active">
+                {{ link.text }}
+              </RouterLink>
+            </li>
+          </ul>
         </div>
       </nav>
     </header>
-    <div class="wrapper">
+    <div class="card-body">
       <RouterView />
     </div>
   </div>

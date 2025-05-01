@@ -66,20 +66,24 @@ async function runTechicalAnalysis(_event: unknown) {
 
 <template>
   <div>
-    <div class="pre-container">
+    <div class="container">
       <div class="card">
-        <footer class="card-footer text-end">
+        <footer class="card-header text-end">
+          <span v-if="isRunningAnalysis" class="card-text me-4">{{ timer.formattedElapsedTime }}</span>
           <button @click="copyToClipboard" v-bind:disabled="reportStore.report == null" class="btn btn-secondary me-2"
-            type="button">Copy to clipboard
+            type="button"><i class="bi bi-clipboard"></i>
+            Copy
           </button>
 
           <button class="btn btn-primary" type="button" disabled v-if="isRunningAnalysis">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Working ({{ timer.formattedElapsedTime }})
+            Techical Analysis
           </button>
           <button @click="runTechicalAnalysis" v-bind:hidden="isRunningAnalysis"
             v-bind:disabled="selectedItem.stock == null" class="btn btn-primary" type="button"
-            v-if="!isRunningAnalysis">Run Analysis
+            v-if="!isRunningAnalysis">
+            <i class="bi bi-robot"></i>
+            Techical Analysis
           </button>
         </footer>
         <div class="card-body">
@@ -111,14 +115,6 @@ async function runTechicalAnalysis(_event: unknown) {
   box-sizing: border-box;
   padding: 0 16px;
   background-color: rgb(60, 60, 70);
-}
-
-.pre-container {
-  white-space: pre-wrap;
-  word-break: break-word;
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
 }
 
 .error-message {
