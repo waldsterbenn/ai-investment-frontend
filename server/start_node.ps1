@@ -8,3 +8,5 @@ fnm env --use-on-cd | Out-String | Invoke-Expression
 fnm use --install-if-missing 23
 
 yarn node $PSScriptRoot\server.js
+
+Read-Host -Prompt "Press Enter to exit"
